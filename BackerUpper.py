@@ -43,7 +43,8 @@ logger_main.addHandler(stream_handler)
 
 
 def scheduler_func():
-    logger_main.info(f"- start scheduler -")
+    logger_main.info(f"- start TuRincon01backerUpper scheduler -")
+    logger_main.info(f"- using api base url: {config.API_URL}  -")
 
     scheduler = BackgroundScheduler()
 
@@ -92,7 +93,7 @@ def call_api_move_tr_backup01():
     if response_move_backup.status_code == 200:
         logger_main.info(f"Successful api response ({response_move_backup.status_code}): {response_move_backup.json().get('status')}")
         
-        return
+        
 
     elif response_move_backup.status_code == 500:
         logger_main.info(f"Unsuccessful api response ({response_move_backup.status_code})")
@@ -102,6 +103,8 @@ def call_api_move_tr_backup01():
             logger_main.info("Unknown 500 message")
     else:
         logger_main.info(f"Unsuccessful api response ({response_move_backup.status_code})")
+    
+    logger_main.info("- Done: daily backup cycle finished -")
     
 
 def call_api_create_tr_backup01():
@@ -116,9 +119,9 @@ def call_api_create_tr_backup01():
     if response_create_backup.status_code == 200:
         logger_main.info(f"Successful api response ({response_create_backup.status_code}): {response_create_backup.json().get('status')}")
         call_api_move_tr_backup01()
-        return
     else:
         logger_main.info(f"Unsuccessful api response ({response_create_backup.status_code})")
+
 
 
 if __name__ == '__main__':
