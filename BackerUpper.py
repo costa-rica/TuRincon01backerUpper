@@ -9,11 +9,11 @@ from logging.handlers import RotatingFileHandler
 # import pandas as pd
 
 
-if os.environ.get('CONFIG_TYPE')=='local':
+if os.environ.get('FLASK_CONFIG_TYPE')=='local':
     config = ConfigLocal()
-elif os.environ.get('CONFIG_TYPE')=='dev':
+elif os.environ.get('FLASK_CONFIG_TYPE')=='dev':
     config = ConfigDev()
-elif os.environ.get('CONFIG_TYPE')=='prod':
+elif os.environ.get('FLASK_CONFIG_TYPE')=='prod':
     config = ConfigProd()
 
 
