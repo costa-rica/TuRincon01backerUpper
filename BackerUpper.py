@@ -15,6 +15,10 @@ elif os.environ.get('FLASK_CONFIG_TYPE')=='dev':
     config = ConfigDev()
 elif os.environ.get('FLASK_CONFIG_TYPE')=='prod':
     config = ConfigProd()
+    backups_path = '/home/nick/_backups'
+    if not os.path.exists(backups_path):
+        os.makedirs(backups_path)
+        
 
 
 
@@ -50,11 +54,11 @@ def scheduler_func():
 
     if os.environ.get('FLASK_CONFIG_TYPE')=='local':
         test_job02_call_api_create_tr_backup01 = scheduler.add_job(call_api_create_tr_backup01, 'cron', minute="30", second="05")
-        print("-- TuRinconBackerUpper is backing up HOURLY ")
+        logger_main.info("-- TuRinconBackerUpper is backing up HOURLY ")
         
     elif os.environ.get('FLASK_CONFIG_TYPE')=='prod':
         job02_call_api_create_tr_backup01 = scheduler.add_job(call_api_create_tr_backup01, 'cron', day="*", hour="00")
-        print("-- TuRinconBackerUpper is backing up daily for production")
+        logger_main.info("-- TuRinconBackerUpper is backing up daily for production")
 
     # job_01 = scheduler.add_job(daily_backup, 'cron', minute='*', second='05')
     # job_01 = scheduler.add_job(daily_backup, 'cron', minute='*', second='05')
