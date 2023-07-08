@@ -48,11 +48,18 @@ def scheduler_func():
 
     scheduler = BackgroundScheduler()
 
+    if os.environ.get('FLASK_CONFIG_TYPE')=='local':
+        test_job02_call_api_create_tr_backup01 = scheduler.add_job(call_api_create_tr_backup01, 'cron', minute="30", second="05")
+        print("-- TuRinconBackerUpper is backing up HOURLY ")
+        
+    elif os.environ.get('FLASK_CONFIG_TYPE')=='prod':
+        job02_call_api_create_tr_backup01 = scheduler.add_job(call_api_create_tr_backup01, 'cron', day="*", hour="00")
+        print("-- TuRinconBackerUpper is backing up daily for production")
+
+    # job_01 = scheduler.add_job(daily_backup, 'cron', minute='*', second='05')
     # job_01 = scheduler.add_job(daily_backup, 'cron', minute='*', second='05')
     # job02_call_api_move_tr_backup01 = scheduler.add_job(call_api_move_tr_backup01, 'cron', day="*", hour="00")
-    # job02_call_api_create_tr_backup01 = scheduler.add_job(call_api_create_tr_backup01, 'cron', day="*", hour="00")
-    test_job02_call_api_create_tr_backup01 = scheduler.add_job(call_api_create_tr_backup01, 'cron', minute="30", second="05")
-    # job_01 = scheduler.add_job(daily_backup, 'cron', minute='*', second='05')
+
 
     scheduler.start()
 
